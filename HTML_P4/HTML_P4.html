@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <style>
 * {box-sizing: border-box;}
 
@@ -101,15 +102,57 @@ body {
   <p>Click in the search bar and look up your vehicle.</p>
   <p></p>
 </div>
+<main>
+  <table id ="results">
+    <thead>
+      <tr>
+        <th>web-scrapper-order</th>
+        <th>Car Model</th>
+        <th>Month-Year</th>
+        <th>Average Price</th>
+        <th>Minimum Price</th>
+        <th>Maximum Price</th>
+        <th>Column1</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</main>
 
-<table id ="results"
-  <thead>
-    <tr>
-      <th>Column1</th>
-      <th>Column1</th>
-      <th>Column1</th>
-      <th>Column1</th>
+<script>  
+let csvData = [];
+  Papa.parse('https://drive.google.com/file/d/1w5XKwLh4Tk1Rn1ijJkw-2CGJeDJl6WWO/view?usp=sharing', {
+    download: true,
+    header: true,
+    complete: function(results){
+      csvData = results.data;
+      displayResults(csvData);
+    }
+  });
 
+  function searchCSV() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const filteredData = csvData.filter(row => {
+                return Object.values(row).some(value => value.toLowerCase().includes(query));
+            });
+            displayResults(filteredData);
+        }
 
+        function displayResults(data) {
+            const tableBody = document.querySelector('#results tbody');
+            tableBody.innerHTML = ''; // Clear existing rows
+            data.forEach(row => {
+                const rowElement = document.createElement('tr');
+                Object.values(row).forEach(cell => {
+                    const cellElement = document.createElement('td');
+                    cellElement.textContent = cell;
+                    rowElement.appendChild(cellElement);
+                });
+                tableBody.appendChild(rowElement);
+            });
+        }
+
+</script>
 </body>
 </html>
