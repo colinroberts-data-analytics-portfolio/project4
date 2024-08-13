@@ -48,14 +48,14 @@
     padding: 6px 10px;
     margin-top: 8px;
     margin-right: 16px;
-    background: #ddd;
+    background-color: #2196F3;
     font-size: 17px;
     border: none;
     cursor: pointer;
   }
   
   .topnav .search-container button:hover {
-    background: #ccc;
+    background-color: #2196F3;
   }
   
   @media screen and (max-width: 600px) {
@@ -78,4 +78,4 @@
       border: 1px solid #ccc;
     }
   }
-  
+

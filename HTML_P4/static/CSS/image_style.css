@@ -1,0 +1,12 @@
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.image-container img {
+    max-width: 1000px;
+    height: auto;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
