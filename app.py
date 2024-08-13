@@ -37,7 +37,7 @@ def estimate():
         mileage_range = request.form['mileage']
         transmission = request.form['transmission']
 
-        # Debugging if none found
+        # Debug
         print(f"Received data - Make: {make}, Model: {model}, Year: {year}, Mileage Range: {mileage_range}, Transmission: {transmission}")
 
         # Extract min and max mileage from the range
@@ -56,7 +56,7 @@ def estimate():
         if not matched_cars.empty:
             estimated_price = matched_cars['price'].mean()
         else:
-            # If no exact match, find the closest match based on Make and Model
+            
             matched_cars = used_cars_df[
                 (used_cars_df['Make'] == make) &
                 (used_cars_df['Model'] == model)
@@ -65,7 +65,7 @@ def estimate():
             if not matched_cars.empty:
                 estimated_price = matched_cars['price'].mean()
             else:
-                # If no match found, use the global average price as a last resort
+                
                 estimated_price = used_cars_df['price'].mean()
 
         car_rating = ratings_df[
@@ -79,5 +79,8 @@ def estimate():
         return "An error occurred while processing your request."
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    # PORT environment variable provided by Heroku, default to 5000 if not set
+    port = int(os.environ.get("PORT", 5000))
+    # Bind to '0.0.0.0' so the app is accessible externally
+    app.run(host="0.0.0.0", port=port, debug=False)
