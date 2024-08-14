@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estimated Car Value</title>
+    <title>Group 1 Used Car Estimator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,8 +15,8 @@
             min-height: 100vh;
         }
         header {
-            background-color: #e4e3e3;
-            color: rgb(58, 57, 57);
+            background-color: #333;
+            color: white;
             padding: 15px;
             text-align: center;
         }
@@ -43,27 +43,18 @@
             flex: 1;
             margin: 20px;
         }
-        .sidebar {
-            flex: 1;
-            background-color: #f8f8f8;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 200px;
-            text-align: center;
-        }
-        .sidebar:first-of-type {
-            margin-right: 20px;
-        }
-        .sidebar:last-of-type {
-            margin-left: 20px;
-        }
         .main-content {
-            flex: 2;
+            flex: 1;
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
+        }
+        iframe {
+            width: 100%;
+            height: 800px; /* Adjust the height as needed */
+            border: none;
         }
         footer {
             background-color: #333;
@@ -73,28 +64,19 @@
             width: 100%;
             margin-top: auto;
         }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .result {
-            font-size: 1.2em;
-            margin-top: 20px;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
 
     <!-- Header -->
     <header>
-        <h1>Used Car Estimator</h1>
+        <h1>Group 1 Used Car Estimator</h1>
     </header>
 
     <!-- Navigation Bar -->
     <nav>
         <a href="index.html">Estimates</a>
-        <a href="car_model.html">Second page</a>
+        <a href="/">Second page</a>
         <a href="powerpoint.html">PowerPoint</a>
         <a href="about.html">About</a>
         <a href="contributors.html">Contributors</a>
@@ -102,24 +84,10 @@
 
     <!-- Main Content Area -->
     <div class="container">
-        
-        <!-- Sidebar for Ads (Left) -->
-        <div class="sidebar">
-            <p>Ad Space 1</p>
-        </div>
-
-        <!-- Main Estimator Results -->
+        <!-- Main Estimator Form -->
         <div class="main-content">
-            <h2>Estimated Car Value</h2>
-            <div class="result">
-                <p>Estimated Price: {{ estimated_price }}</p>
-                <p>Car Rating: {{ car_rating }}</p>
-            </div>
-        </div>
-
-        <!-- Sidebar for Ads (Right) -->
-        <div class="sidebar">
-            <p>Ad Space 2</p>
+            <h2>PowerPoint Presentation</h2>
+            <iframe src="powerpoint.pdf"></iframe>
         </div>
     </div>
 
