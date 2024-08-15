@@ -1,6 +1,6 @@
 async function searchImages() {
-    const make = document.getElementById('make').value;
-    const model = document.getElementById('model').value;
+    const make = document.getElementById('search-make').value;
+    const model = document.getElementById('search-model').value;
     const apiKey = "lMS8h7arpMrRVWgniBbl464TISqNklDqsSAus0k5UyDJJFurxrhAEkLL"; 
     const numImages = 1;
 

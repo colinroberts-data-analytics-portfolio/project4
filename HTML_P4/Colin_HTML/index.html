@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group 1 Used Car Estimator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        nav {
+            background-color: #77e6f5;
+            overflow: hidden;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: rgb(8, 6, 94);
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #555;
+            color: white;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex: 1;
+            margin: 20px;
+        }
+        .sidebar {
+            flex: 1;
+            background-color: #f8f8f8;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 200px;
+            text-align: center;
+        }
+        .sidebar:first-of-type {
+            margin-right: 20px;
+        }
+        .sidebar:last-of-type {
+            margin-left: 20px; /* Creates equal spacing on the right */
+        }
+        .main-content {
+            flex: 2;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .main-content form {
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content form select,
+        .main-content form button {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+        .main-content form button {
+            background-color: #5cb85c;
+            color: white;
+            cursor: pointer;
+        }
+        .main-content form button:hover {
+            background-color: #4cae4c;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            margin-top: auto;
+        }
+    </style>
+    <script>
+        function updateModels() {
+            const make = document.getElementById('make').value;
+            const modelSelect = document.getElementById('model');
+
+            // Clear the current options
+            modelSelect.innerHTML = '<option value="" disabled selected>Select Model</option>';
+
+            if (make) {
+                fetch('/get_models', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `make=${make}`
+                })
+                .then(response => response.json())
+                .then(models => {
+                    models.forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model;
+                        option.textContent = model;
+                        modelSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching models:', error);
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Group 1 Used Car Estimator</h1>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="/">Home</a>
+        <a href="#"></a>
+        <a href="#">About</a>
+        <a href="#">Contributors</a>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="container">
+        
+        <!-- Sidebar for Ads (Left) -->
+        <div class="sidebar">
+            <p>Ad Space 1</p>
+        </div>
+
+        <!-- Main Estimator Form -->
+        <div class="main-content">
+            <h2>Enter Your Vehicle Information</h2>
+            <form action="/estimate" method="POST">
+                <select id="make" name="make" required onchange="updateModels()">
+                    <option value="" disabled selected>Select Make</option>
+                    {% for make in makes %}
+                    <option value="{{ make }}">{{ make }}</option>
+                    {% endfor %}
+                </select>
+                
+                <select id="model" name="model" required>
+                    <option value="" disabled selected>Select Model</option>
+                    <!-- Models will be dynamically inserted here based on the selected Make -->
+                </select>
+                
+                <select id="year" name="year" required>
+                    <option value="" disabled selected>Select Year</option>
+                    {% for year in years %}
+                    <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+                
+                <select id="mileage" name="mileage" required>
+                    <option value="" disabled selected>Select Mileage Range</option>
+                    <option value="0-5000">0 - 5,000 miles</option>
+                    <option value="5001-10000">5,001 - 10,000 miles</option>
+                    <option value="10001-20000">10,001 - 20,000 miles</option>
+                    <option value="20001-50000">20,001 - 50,000 miles</option>
+                    <option value="50001-100000">50,001 - 100,000 miles</option>
+                    <option value="100001+">100,001+ miles</option>
+                </select>
+                
+                <select id="fuel_type" name="fuel_type" required>
+                    <option value="" disabled selected>Select Fuel Type</option>
+                    {% for fuel_type in fuel_types %}
+                    <option value="{{ fuel_type }}">{{ fuel_type }}</option>
+                    {% endfor %}
+                </select>
+                
+                <select id="transmission" name="transmission" required>
+                    <option value="" disabled selected>Select Transmission</option>
+                    {% for transmission in transmissions %}
+                    <option value="{{ transmission }}">{{ transmission }}</option>
+                    {% endfor %}
+                </select>
+                
+                <!-- Submit Button -->
+                <button type="submit">Get Estimate</button>
+            </form>
+        </div>
+
+        <!-- Sidebar for Ads (Right) -->
+        <div class="sidebar">
+            <p>Ad Space 2</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Used Car Estimator. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

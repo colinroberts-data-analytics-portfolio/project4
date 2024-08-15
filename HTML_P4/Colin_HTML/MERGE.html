@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Estimator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        nav {
+            background-color: #77e6f5;
+            overflow: hidden;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: rgb(8, 6, 94);
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #555;
+            color: white;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex: 1;
+            margin: 20px;
+        }
+        .sidebar {
+            flex: 1;
+            background-color: #f8f8f8;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 200px;
+            text-align: center;
+            align-self:flex-start;
+        }
+        .right_sidebar {
+            flex: 1;
+            background-color: #f8f8f8;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 200px;
+            text-align: center;
+            align-self: flex-end;
+        }
+        .sidebar:first-of-type {
+            margin-right: 20px;
+        }
+        .sidebar:last-of-type {
+            margin-left: 20px;
+        }
+        .main-content {
+            flex: 2;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            margin-top: auto;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .result {
+            font-size: 1.2em;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <h1>Car Price Estimator</h1>
+    </header>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/estimate">Estimator</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </nav>
+
+ <!-- Sidebar for Ads (Left) -->
+ <div class="sidebar">
+    <p>Ad Space 1</p>
+</div>
+
+<div class="right_sidebar">
+    <p>Ad Space 2</p>
+</div>
+</div>
+
+
+    <div class="container">
+        
+        <div class="main-content">
+            <form id="estimate-form" method="POST" action="/estimate">
+            <label for="make">Make:</label>
+            <select id="make" name="make">
+                {% for make in makes %}
+                <option value="{{ make }}">Make</option>
+                {% endfor %}
+            </select>
+
+            <label for="model">Model:</label>
+            <select id="model" name="model">
+                <option value="">Model</option>
+            </select>
+
+            <label for="year">Year:</label>
+            <select id="year" name="year">
+                {% for year in years %}
+                    <option value="{{ year }}">Year</option>
+                {% endfor %}
+            </select>
+
+            <label for="mileage">Mileage Range (e.g., 10000-20000):</label>
+        
+            <input type="text" id="mileage" name="mileage">
+
+            <label for="fuel_type">Fuel Type:</label>
+            <select id="fuel_type" name="fuel_type">
+                {% for fuel_type in fuel_types %}
+                <option value="{{ fuel_type }}">Fuel Type</option>
+                {% endfor %}
+            </select>
+        
+            <label for="transmission">Transmission:</label>
+            <select id="transmission" name="transmission">
+                {% for transmission in transmissions %}
+                <option value="{{ transmission }}">Transmission</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Estimate Price</button>
+    
+            </form>
+        </div>
+    </div>
+
+    
+    <script>
+        $(document).ready(function() {
+            $('#make').change(function() {
+                var make = $(this).val();
+                $.post('/get_models', { make: make }, function(data) {
+                    var modelSelect = $('#model');
+                    modelSelect.empty();
+                    $.each(data, function(index, model) {
+                        modelSelect.append('<option value="' + model + '">' + model + '</option>');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
