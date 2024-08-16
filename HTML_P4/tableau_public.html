@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau Visualization</title>
+    <link rel="stylesheet" href="static/CSS/tableau_style.css">
+    <link rel="stylesheet" href="static/CSS/header_style.css"> 
+</head>
+<body>
+    
+  <div class="topnav">
+    <a href="index.html"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="https://drive.google.com/file/d/1-BcQM95D8D2jiJPQrcUTpXQF3osbQMGL/view"><i class="fa fa-fw fa-rocket"></i> About</a>
+    <a href="https://github.com/colinroberts-data-analytics-portfolio/project4"><i class="fa fa-fw fa-github"></i>Github</a>
+    <a href = "contributors.html"><i class="fa fa-fw fa-users"></i>Contributors</a>
+    <a class="active" href = "tableau_public.html"><i class ="fa fa-fw fa-area-chart"></i>Tableau Public</a>
+    <a href = "powerPoint.html"><i class ="fa fa-fw fa-file-powerpoint-o"></i>PowerPoint</a>
+  </div>
+
+    
+    
+    
+    
+    <div class="tableau-container" id="viz1723768623815">
+        <noscript>
+            <a href='#'>
+                <img alt='CarData' src='https://public.tableau.com/static/images/pr/preliminaryvizFinal/CarData/1_rss.png' style='border: none' />
+            </a>
+        </noscript>
+        <object class='tableauViz' style='display:none;'>
+            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+            <param name='embed_code_version' value='3' />
+            <param name='site_root' value='' />
+            <param name='name' value='preliminaryvizFinal/CarData' />
+            <param name='tabs' value='no' />
+            <param name='toolbar' value='yes' />
+            <param name='static_image' value='https://public.tableau.com/static/images/pr/preliminaryvizFinal/CarData/1.png' />
+            <param name='animate_transition' value='yes' />
+            <param name='display_static_image' value='yes' />
+            <param name='display_spinner' value='yes' />
+            <param name='display_overlay' value='yes' />
+            <param name='display_count' value='yes' />
+            <param name='language' value='en-US' />
+            <param name='filter' value='publish=yes' />
+        </object>
+    </div>
+
+    <script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            var divElement = document.getElementById('viz1723768623815');
+            var vizElement = divElement.getElementsByTagName('object')[0];
+            vizElement.style.width = '100%';
+            vizElement.style.height = '800px'; // Adjust height as needed
+
+            var scriptElement = document.createElement('script');
+            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+            vizElement.parentNode.insertBefore(scriptElement, vizElement);
+        });
+    </script>
+
+<footer>
+    <p>&copy; 2024 Used Car Estimator. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

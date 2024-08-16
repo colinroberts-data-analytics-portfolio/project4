@@ -1,0 +1,27 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    text-align: center;
+    background-color: lightblue;
+    }
+
+.tableau-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px; /* Adjust based on your layout */
+    margin: 0 auto; /* Center the container */
+    padding: 10px; /* Add padding for spacing */
+    overflow: hidden; /* Ensure content fits within the container */
+}
+.tableau-container object {
+    width: 100%;
+    height: 800px; /* Adjust height as needed */
+}
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    margin-top: auto;
+}
