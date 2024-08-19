@@ -21,7 +21,7 @@ async function searchImages() {
 
         if (!response.ok) {
             throw new Error('Network response was not ok');
-        }
+        }  
 
         const data = await response.json();
         const imageContainer = document.getElementById('image-container');

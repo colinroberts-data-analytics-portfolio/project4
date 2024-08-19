@@ -5,16 +5,28 @@ document.addEventListener('DOMContentLoaded', () => {
     let usedCarsData = [];
     let ratingsData = [];
 
-    // Function to parse CSV data into JSON
+    // Function to parse CSV data into JSON using PapaParse
     const parseCSV = (csvText) => {
-        const rows = csvText.trim().split('\n').map(row => row.split(','));
-        const headers = rows[0];
-        return rows.slice(1).map(row => {
-            return headers.reduce((obj, header, index) => {
-                obj[header] = row[index];
-                return obj;
-            }, {});
-        });
+        const results = Papa.parse(csvText, { header: true, skipEmptyLines: true });
+        console.log('CSV Headers:', results.meta.fields);
+        return results.data;
+    };
+
+    // Function to convert a two-digit year to a four-digit year
+    const convertToFourDigitYear = (year) => {
+        const currentYear = new Date().getFullYear();
+        const century = Math.floor(currentYear / 100) * 100;
+        const yearInt = parseInt(year, 10);
+        
+        if (isNaN(yearInt)) {
+            console.warn(`Year is not a number: "${year}"`);
+            return NaN;
+        }
+        
+        if (yearInt < 100) {
+            return (yearInt < 50) ? (century + yearInt) : (century - 100 + yearInt);
+        }
+        return yearInt; // Return as is if already four-digit
     };
 
     // Load CSV data and initialize dropdowns
@@ -41,45 +53,53 @@ document.addEventListener('DOMContentLoaded', () => {
         const yearSelect = document.getElementById('year');
         const fuelTypeSelect = document.getElementById('fuel_type');
         const transmissionSelect = document.getElementById('transmission');
-
+        
+        if (!usedCarsData || usedCarsData.length === 0) {
+            console.warn('No data available to populate dropdowns.');
+            return;
+        }
+        
         const makes = new Set();
         const modelsByMake = {};
         const years = new Set();
         const fuelTypes = new Set();
         const transmissions = new Set();
-
+        
         usedCarsData.forEach(car => {
-            makes.add(car.Make);
-            if (!modelsByMake[car.Make]) modelsByMake[car.Make] = new Set();
-            modelsByMake[car.Make].add(car.Model);
-            years.add(parseInt(car.year_made, 10)); // Ensure year is an integer
-            fuelTypes.add(car.fuel_type);
-            transmissions.add(car.transmission);
+            console.log(`Raw Year Data: ${car['year_made']}`); // Log raw year data
+
+            if (car['Make']) makes.add(car['Make']);
+            if (car['Make'] && car['Model']) {
+                if (!modelsByMake[car['Make']]) modelsByMake[car['Make']] = new Set();
+                modelsByMake[car['Make']].add(car['Model']);
+            }
+            if (car['year_made']) {
+                const trimmedYear = car['year_made'].trim();
+                console.log(`Trimmed Year: "${trimmedYear}"`); // Log trimmed year
+                const year = convertToFourDigitYear(trimmedYear);
+                console.log(`Converted Year: ${year}`); // Log converted year
+                if (!isNaN(year)) {
+                    years.add(year);
+                } else {
+                    console.warn(`Invalid year value: "${car['year_made']}"`);
+                }
+            }
+            if (car['fuel_type']) fuelTypes.add(car['fuel_type']);
+            if (car['transmission']) transmissions.add(car['transmission']);
         });
-
-        // Log data to verify correct parsing and population
-        console.log('Makes:', Array.from(makes));
-        console.log('Models by Make:', modelsByMake);
-        console.log('Years:', Array.from(years));
-        console.log('Fuel Types:', Array.from(fuelTypes));
-        console.log('Transmissions:', Array.from(transmissions));
-
-        // Populate dropdowns
+        
+        const sortedYears = Array.from(years).sort((a, b) => b - a); // Sort years in descending order
+        console.log('Sorted Years:', sortedYears);
+        
         populateDropdown('make', Array.from(makes));
-        populateDropdown('year', Array.from(years).sort((a, b) => b - a)); // Sort years in descending order
+        populateDropdown('year', Array.from(sortedYears));
         populateDropdown('fuel_type', Array.from(fuelTypes));
         populateDropdown('transmission', Array.from(transmissions));
-
-        // Event listener for make dropdown
+        
         makeSelect.addEventListener('change', () => {
             const selectedMake = makeSelect.value;
-            console.log(`Selected Make: ${selectedMake}`); // Debugging line
-
-            // Clear model dropdown when make changes
             populateDropdown('model', []);
-
             const models = modelsByMake[selectedMake] || [];
-            console.log(`Available Models for Make ${selectedMake}:`, models); // Debugging line
             populateDropdown('model', Array.from(models));
         });
     };
