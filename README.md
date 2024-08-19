@@ -32,6 +32,7 @@ The presentation maintains audience interest. (5 points)
 This project will be evaluated against the requirements and assigned a grade according to the following table:
 
 Tableau visualizations are stored here : 
+https://public.tableau.com/views/preliminaryvizFinal_17241098859330/MakevsPrice?:langu[…]sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
 
 Link to Used Car Estimator --- * locked out of account unable to change it like I wanted to therefore you must back out and reclick the link to search again
 
