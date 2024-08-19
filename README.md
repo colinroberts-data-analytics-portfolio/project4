@@ -31,3 +31,5 @@ The presentation maintains audience interest. (5 points)
 
 This project will be evaluated against the requirements and assigned a grade according to the following table:
 
+Tableau visualizations are stored here : 
+
