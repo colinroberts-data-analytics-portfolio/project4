@@ -33,3 +33,7 @@ This project will be evaluated against the requirements and assigned a grade acc
 
 Tableau visualizations are stored here : 
 
+Link to Used Car Estimator --- * locked out of account unable to change it like I wanted to therefore you must back out and reclick the link to search again
+
+https://used-cars-group1-vbc24-ad4e8b8faf40.herokuapp.com/
+
